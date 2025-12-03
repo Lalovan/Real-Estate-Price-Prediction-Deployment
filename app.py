@@ -338,4 +338,4 @@ payload = {
 # Send POST request
 response = requests.post(api_url, json=payload)
 result = response.json()
-st.write(f"Predicted price: €{result['predicted_price']:,}")
+st.write(f"Predicted price: €{result["predicted_price"]:,}")
