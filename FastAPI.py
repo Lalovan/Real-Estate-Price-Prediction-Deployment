@@ -45,7 +45,7 @@ pipeline = joblib.load(model_path)
 def predict(data:Features): # Its job: Convert a web request->into model input-> into a prediction->into a web response
     df = pd.DataFrame([data.model_dump()])
     prediction = pipeline.predict(df)
-    return{"The predicted price of real estate property is: ",float(prediction[0])} # Making sure it returns a dictionary
+    return{"predcited_price":float(prediction[0])} # Making sure it returns a dictionary
 
 """
 There was an error caused because the model is expecting 25 features and here only 14 were passed.
