@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import joblib
+import requests # Relevant for the API
 
 # ------------------------------
 # Loading model
@@ -278,9 +279,36 @@ elif st.session_state.step == 5:
         df[col] = df[col].astype("Int64")
 
     # Prediction
-    with st.spinner("Predicting price..."):
-        prediction = pipeline.predict(df)[0]
+    #with st.spinner("Predicting price..."):
+        #prediction = pipeline.predict(df)[0]
 
-    st.success(f"Estimated Property Price: €{prediction:,.0f}")
+    #st.success(f"Estimated Property Price: €{prediction:,.0f}")
 
-    st.button("New Prediction", on_click=lambda: st.session_state.update({"step": 1}))
+    #st.button("New Prediction", on_click=lambda: st.session_state.update({"step": 1}))
+
+    # Prediction (API)
+
+api_url= "https://real-estate-price-prediction-immoeliza.onrender.com/predict"
+
+payload = {
+"total_area_sqm": st.session_state.total_area_sqm,
+"cadastral_income": st.session_state.cadastral_income,
+"primary_energy_consumption_sqm": st.session_state.primary_energy_consumption_sqm,
+"nbr_bedrooms": st.session_state.nbr_bedrooms,
+"nbr_frontages": st.session_state.nbr_frontages,
+"subproperty_type": st.session_state.subproperty_type,
+"province": st.session_state.province,
+"fl_terrace": st.session_state.fl_terrace,
+"fl_garden": st.session_state.fl_garden,
+"fl_swimming_pool": st.session_state.fl_swimming_pool,
+"fl_furnished": st.session_state.fl_furnished,
+"epc": st.session_state.epc,
+"equipped_kitchen": st.session_state.equipped_kitchen,
+"heating_type": st.session_state.heating_type
+}
+
+# Send POST request
+response = requests.post(api_url, json=payload)
+result = response.json()
+
+st.write(f"Predicted price: {result['predicted_price']}")
