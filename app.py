@@ -28,7 +28,34 @@ def prev_step():
 # ------------------------------
 # UI Title
 # ------------------------------
-st.title(" ") # Niot necessary for the moment
+st.title(" ") # Not necessary for the moment
+
+# ------------------------------
+# Initializing defaults for a set of features
+# ------------------------------
+
+defaults = {
+    "step": 1,
+    "total_area_sqm": 100,
+    "cadastral_income": 0,
+    "primary_energy_consumption_sqm": 100,
+    "nbr_bedrooms": 2,
+    "nbr_frontages": 2,
+    "subproperty_type": "APARTMENT",
+    "province": "Antwerp",
+    "fl_terrace": False,
+    "fl_garden": False,
+    "fl_swimming_pool": False,
+    "fl_furnished": False,
+    "epc": "good",
+    "equipped_kitchen": "UNKNOWN",
+    "heating_type": "GAS"
+}
+
+for key, value in defaults.items():
+    if key not in st.session_state:
+        st.session_state[key] = value
+
 
 # ------------------------------
 # STEP 0 — LANDING PAGE
@@ -139,6 +166,7 @@ if st.session_state.step == 1:
 # ------------------------------
 # STEP 2 — ENERGY & INSTALLATIONS
 # ------------------------------
+
 elif st.session_state.step == 2:
     st.header("Step 2 of 4 — Energy & Installations")
 
