@@ -191,9 +191,9 @@ elif st.session_state.step == 2:
 
     st.session_state.heating_type = st.selectbox(
         "Heating type",
-        ["GAS", "ELECTRIC", "HEAT PUMP", "OIL", "OTHER"],
+        ["GAS", "ELECTRIC", "FUELOIL", "MISSING"],
         index=0 if "heating_type" not in st.session_state else
-        ["GAS", "ELECTRIC", "HEAT PUMP", "OIL", "OTHER"].index(st.session_state.heating_type)
+        ["GAS", "ELECTRIC", "FUELOIL", "MISSING"].index(st.session_state.heating_type)
     )
 
     st.session_state.equipped_kitchen = st.selectbox(
@@ -337,5 +337,7 @@ payload = {
 
 # Send POST request
 response = requests.post(api_url, json=payload)
+#st.write("Raw API response:", response.text) #Debugging line
 result = response.json()
+#st.write("Parsed JSON:", result) #Debugging line
 st.write(f"Predicted price: €{result['predicted_price']:,}")
