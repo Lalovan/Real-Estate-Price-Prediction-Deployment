@@ -47,11 +47,4 @@ def predict(data:Features): # Its job: Convert a web request->into model input->
     prediction = pipeline.predict(df)
     return{"predicted_price":float(prediction[0])} # Making sure it returns a dictionary
 
-"""
-There was an error caused because the model is expecting 25 features and here only 14 were passed.
-The error occurs because the pipeline was trained with a ColumnTransformer that expands the 14 raw features into 25 columns internally (due to one-hot encoding and missing-value flags),
-but passing a plain Python list bypasses the column names, so the transformer cannot match columns, thus shape mismatch.
-By converting the Pydantic input into a df with the correct column names, the pipeline can perform all preprocessing exactly as it did during training.
-This ensures the model receives the expected 25-feature array, resolving the ValueError while keeping the API clean and compatible with the trained pipeline.
-"""
 
